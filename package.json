@@ -1,0 +1,8 @@
+{
+  "name": "battle-rap-fix-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "git@github.com:terrytilley/battle-rap-fix-server.git",
+  "author": "Terry Tilley <terry@terrytilley.com>",
+  "license": "MIT"
+}
