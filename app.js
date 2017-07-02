@@ -2,9 +2,16 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { Model } from 'objection';
+import knex from './db/knex';
 import routes from './routes/index.router';
 
+require('dotenv').config();
+global.Promise = require('bluebird');
+
 const app = express();
+
+Model.knex(knex);
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));

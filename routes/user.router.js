@@ -1,9 +1,8 @@
 import express from 'express';
+import { getAll } from '../controllers/user.controller';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'Users root' });
-});
+router.get('/', getAll);
 
 export default router;
