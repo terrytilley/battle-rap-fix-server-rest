@@ -4,7 +4,13 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon server.js --exec babel-node"
+    "start": "NODE_ENV=development nodemon server.js --exec babel-node",
+    "migrate:dev": "knex migrate:latest --env development",
+    "migrate:test": "knex migrate:latest --env test",
+    "seed:dev": "knex seed:run --env development",
+    "seed:test": "knex seed:run --env test",
+    "rollback:dev": "knex migrate:rollback --env development",
+    "rollback:test": "knex migrate:rollback --env test"
   },
   "babel": {
     "presets": [

@@ -13,8 +13,8 @@ class User extends Model {
         'username',
         'email',
         'password',
-        'active',
         'created_at',
+        'active',
       ],
 
       properties: {
