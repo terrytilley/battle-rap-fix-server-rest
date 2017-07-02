@@ -28,9 +28,6 @@
     "express": "^4.15.3",
     "morgan": "^1.8.2"
   },
-  "repository": "git@github.com:terrytilley/battle-rap-fix-server.git",
-  "author": "Terry Tilley <terry@terrytilley.com>",
-  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
@@ -41,5 +38,8 @@
     "eslint-plugin-jsx-a11y": "^5.1.0",
     "eslint-plugin-react": "^7.1.0",
     "nodemon": "^1.11.0"
-  }
+  },
+  "repository": "git@github.com:terrytilley/battle-rap-fix-server.git",
+  "author": "Terry Tilley <terry@terrytilley.com>",
+  "license": "MIT"
 }
