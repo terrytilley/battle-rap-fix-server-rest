@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import routes from './routes/index.router';
 
 const app = express();
 
@@ -11,6 +12,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/api/v1', routes);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
