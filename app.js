@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import validator from 'express-validator';
 import { Model } from 'objection';
 import knex from './db/knex';
 import routes from './routes/index.router';
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(validator());
 app.use('/api/v1', routes);
 
 // Catch 404 and forward to error handler
