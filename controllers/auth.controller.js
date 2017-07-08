@@ -1,8 +1,16 @@
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import moment from 'moment';
+import nodemailer from 'nodemailer';
+import mandrillTransport from 'nodemailer-mandrill-transport';
 import User from '../models/user.model';
 import { setUserInfo, generateToken } from '../lib/auth';
+
+const transport = nodemailer.createTransport(mandrillTransport({
+  auth: {
+    apiKey: process.env.MANDRILL_API_KEY,
+  },
+}));
 
 export const register = (req, res) => {
   req.sanitize('username').trim();
@@ -89,6 +97,27 @@ export const forgotPassword = (req, res, next) => {
         })
         .then((data) => {
           if (data !== 1) return res.status(404).json({ error: `${email} does not exist` });
+
+          const buttonHtml = `<a href="http://localhost:8000/api/v1/auth/reset-password/${resetToken}" class="btn-primary" itemprop="url" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Reset email address</a>`;
+
+          transport.sendMail({
+            mandrillOptions: {
+              template_name: 'reset-password',
+              template_content: [
+                {
+                  name: 'button',
+                  content: buttonHtml,
+                },
+              ],
+            },
+            from: 'noreply@battlerapfix.com',
+            to: email,
+            subject: 'Reset Password',
+          }, (error, info) => {
+            if (error) console.error(error);
+            console.log(info);
+          });
+
           return res.status(200).json({ message: `Password reset email sent to ${email}` });
         })
         .catch(error => res.status(500).json({ error }));
@@ -119,7 +148,7 @@ export const resetPassword = (req, res) => {
       })
       .then((data) => {
         if (data !== 1) return res.status(404).json({ error: 'Token has expired' });
-        return res.status(200).json({ message: 'Password changed successfully. Please login with your new password.' });
+        return res.status(200).json({ message: 'Password successfully changed.' });
       })
       .catch(error => res.status(500).json({ error }));
   });

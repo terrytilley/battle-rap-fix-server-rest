@@ -25,6 +25,8 @@
     "knex": "^0.13.0",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
+    "nodemailer": "^4.0.1",
+    "nodemailer-mandrill-transport": "^1.2.0",
     "objection": "^0.8.4",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
