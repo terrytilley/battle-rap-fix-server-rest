@@ -21,8 +21,7 @@ const localLogin = new LocalStrategy(localOptions, (emailOrUsername, password, d
         return done(null, false);
       }
       return done(null, user);
-    })
-    .catch(err => done(err));
+    });
 });
 
 const jwtOptions = {
