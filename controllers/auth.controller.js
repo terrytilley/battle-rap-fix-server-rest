@@ -97,5 +97,30 @@ export const forgotPassword = (req, res, next) => {
 };
 
 export const resetPassword = (req, res) => {
-  res.status(200).json({ message: 'Reset Password' });
+  req.sanitize('password').trim();
+  req.checkBody('password', 'Invalid password').notEmpty();
+
+  const salt = bcrypt.genSaltSync(10);
+  const password = bcrypt.hashSync(req.body.password, salt);
+  const token = req.params.token;
+  const currentDate = moment().format();
+
+  req.getValidationResult().then((result) => {
+    if (!result.isEmpty()) return res.status(400).json({ errors: result.mapped() });
+
+    return User
+      .query()
+      .where('reset_password_token', token)
+      .andWhere('reset_password_expires', '>', currentDate)
+      .patch({
+        password,
+        reset_password_token: null,
+        reset_password_expires: null,
+      })
+      .then((data) => {
+        if (data !== 1) return res.status(404).json({ error: 'Token has expired' });
+        return res.status(200).json({ message: 'Password changed successfully. Please login with your new password.' });
+      })
+      .catch(error => res.status(500).json({ error }));
+  });
 };
