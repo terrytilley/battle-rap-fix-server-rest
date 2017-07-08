@@ -40,8 +40,27 @@ export const register = (req, res) => {
         const userInfo = setUserInfo(user);
         res.status(201).json({
           token: generateToken(userInfo),
+          user: userInfo,
         });
       })
       .catch(error => res.status(500).json({ error }));
+  });
+};
+
+export const login = (req, res) => {
+  req.sanitize('emailOrUsername').trim();
+  req.sanitize('password').trim();
+
+  req.checkBody('emailOrUsername', 'Enter a email or username').notEmpty();
+  req.checkBody('password', 'Enter a password').notEmpty();
+
+  req.getValidationResult().then((result) => {
+    if (!result.isEmpty()) return res.status(400).json({ errors: result.mapped() });
+
+    const userInfo = setUserInfo(req.user);
+    return res.status(200).json({
+      token: `JWT ${generateToken(userInfo)}`,
+      user: userInfo,
+    });
   });
 };
