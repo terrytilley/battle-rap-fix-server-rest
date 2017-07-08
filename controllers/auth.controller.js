@@ -59,7 +59,7 @@ export const login = (req, res) => {
 
     const userInfo = setUserInfo(req.user);
     return res.status(200).json({
-      token: `JWT ${generateToken(userInfo)}`,
+      token: generateToken(userInfo),
       user: userInfo,
     });
   });
