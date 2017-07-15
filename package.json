@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "test": "NODE_ENV=test jest --watch",
     "start": "NODE_ENV=development nodemon server.js --exec babel-node",
     "migrate:dev": "knex migrate:latest --env development",
     "migrate:test": "knex migrate:latest --env test",
@@ -63,7 +64,9 @@
     "eslint-plugin-import": "^2.6.1",
     "eslint-plugin-jsx-a11y": "^5.1.0",
     "eslint-plugin-react": "^7.1.0",
-    "nodemon": "^1.11.0"
+    "jest": "^20.0.4",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
   },
   "repository": {
     "type": "git",
