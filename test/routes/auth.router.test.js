@@ -108,5 +108,29 @@ describe('/auth', () => {
           expect(res.body.user).to.not.have.property('password', 'qwerty123');
         });
     });
+
+    it('should not allow user to login with wrong username', () => {
+      request(app)
+        .post(`${URL}/auth/login`)
+        .send({
+          emailOrUsername: 'terryt8',
+          password: 'qwerty123',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(401);
+        });
+    });
+
+    it('should not allow user to login with wrong password', () => {
+      request(app)
+        .post(`${URL}/auth/login`)
+        .send({
+          emailOrUsername: 'terryt88',
+          password: 'qwerty123456',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(401);
+        });
+    });
   });
 });
