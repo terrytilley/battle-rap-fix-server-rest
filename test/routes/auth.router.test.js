@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { expect } from 'chai';
 import { rollback, migrate, seed } from '../helper';
 import app from '../../app';
 
@@ -27,14 +28,14 @@ describe('/auth', () => {
         password: 'qwerty123',
       })
       .then((res) => {
-        expect(res.statusCode).toBe(201);
-        expect(res.body).toHaveProperty('user');
-        expect(res.body).toHaveProperty('token');
-        expect(res.body.user).toHaveProperty('id', 5);
-        expect(res.body.user).toHaveProperty('displayName', 'John Smith');
-        expect(res.body.user).toHaveProperty('username', 'johnsmith123');
-        expect(res.body.user).toHaveProperty('email', 'john@johnsmith.com');
-        expect(res.body.user).not.toHaveProperty('password', 'qwerty123');
+        expect(res.statusCode).to.equal(201);
+        expect(res.body).to.have.property('user');
+        expect(res.body).to.have.property('token');
+        expect(res.body.user).to.have.property('id', 5);
+        expect(res.body.user).to.have.property('displayName', 'John Smith');
+        expect(res.body.user).to.have.property('username', 'johnsmith123');
+        expect(res.body.user).to.have.property('email', 'john@johnsmith.com');
+        expect(res.body.user).to.not.have.property('password', 'qwerty123');
       })
     ));
 
@@ -48,8 +49,8 @@ describe('/auth', () => {
         password: 'qwerty123',
       })
       .then((res) => {
-        expect(res.statusCode).toBe(500);
-        expect(res.body).toHaveProperty('error');
+        expect(res.statusCode).to.equal(500);
+        expect(res.body).to.have.property('error');
       })
     ));
 
@@ -63,9 +64,49 @@ describe('/auth', () => {
         password: 'qwerty123',
       })
       .then((res) => {
-        expect(res.statusCode).toBe(500);
-        expect(res.body).toHaveProperty('error');
+        expect(res.statusCode).to.equal(500);
+        expect(res.body).to.have.property('error');
       })
     ));
+  });
+
+  describe('POST /login', () => {
+    it('should allow a user to login with email', () => {
+      request(app)
+        .post(`${URL}/auth/login`)
+        .send({
+          emailOrUsername: 'terry@terrytilley.com',
+          password: 'qwerty123',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('user');
+          expect(res.body).to.have.property('token');
+          expect(res.body.user).to.have.property('id', 1);
+          expect(res.body.user).to.have.property('displayName', 'Terry Tilley');
+          expect(res.body.user).to.have.property('username', 'terryt88');
+          expect(res.body.user).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body.user).to.not.have.property('password', 'qwerty123');
+        });
+    });
+
+    it('should allow a user to login with username', () => {
+      request(app)
+        .post(`${URL}/auth/login`)
+        .send({
+          emailOrUsername: 'terryt88',
+          password: 'qwerty123',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('user');
+          expect(res.body).to.have.property('token');
+          expect(res.body.user).to.have.property('id', 1);
+          expect(res.body.user).to.have.property('displayName', 'Terry Tilley');
+          expect(res.body.user).to.have.property('username', 'terryt88');
+          expect(res.body.user).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body.user).to.not.have.property('password', 'qwerty123');
+        });
+    });
   });
 });
