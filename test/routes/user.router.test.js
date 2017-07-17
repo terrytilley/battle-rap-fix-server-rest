@@ -49,6 +49,16 @@ describe('/users', () => {
           done();
         });
     });
+
+    it('should return error if user not found', (done) => {
+      request(app)
+        .get(`${URL}/id/9999`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('error', 'User Not Found');
+          done();
+        });
+    });
   });
 
   describe('GET /:username', () => {
@@ -62,6 +72,16 @@ describe('/users', () => {
           expect(res.body).to.have.property('username', 'terryt88');
           expect(res.body).to.have.property('email', 'terry@terrytilley.com');
           expect(res.body).to.not.have.property('password', 'qwerty123');
+          done();
+        });
+    });
+
+    it('should return error if user not found', (done) => {
+      request(app)
+        .get(`${URL}/idontexist`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('error', 'User Not Found');
           done();
         });
     });

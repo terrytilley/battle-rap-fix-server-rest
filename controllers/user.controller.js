@@ -21,8 +21,9 @@ export const getById = (req, res) => {
     .query()
     .where('id', req.params.id)
     .first()
-    .then(({ id, display_name, username, email, active }) => {
-      if (!id) return res.status(404).json({ error: 'User Not Found' });
+    .then((user) => {
+      if (!user) return res.status(404).json({ error: 'User Not Found' });
+      const { id, display_name, username, email, active } = user;
 
       return res.status(200).json({
         id,
@@ -40,8 +41,9 @@ export const getByUsername = (req, res) => {
     .query()
     .where('username', req.params.username)
     .first()
-    .then(({ id, display_name, username, email, active }) => {
-      if (!username) return res.status(404).json({ error: 'User Not Found' });
+    .then((user) => {
+      if (!user) return res.status(404).json({ error: 'User Not Found' });
+      const { id, display_name, username, email, active } = user;
 
       return res.status(200).json({
         id,
