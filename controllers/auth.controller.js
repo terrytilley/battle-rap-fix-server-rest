@@ -100,7 +100,7 @@ export const forgotPassword = (req, res, next) => {
 
           const buttonHtml = `<a href="http://localhost:8000/api/v1/auth/reset-password/${resetToken}" class="btn-primary" itemprop="url" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Reset your password</a>`;
 
-          transport.sendMail({
+          return transport.sendMail({
             mandrillOptions: {
               template_name: 'reset-password',
               template_content: [
@@ -115,10 +115,8 @@ export const forgotPassword = (req, res, next) => {
             subject: 'Reset Password',
           }, (error, info) => {
             if (error) console.error(error);
-            console.log(info);
+            return res.status(200).json(info);
           });
-
-          return res.status(200).json({ message: `Password reset email sent to ${email}` });
         })
         .catch(error => res.status(500).json({ error }));
     });

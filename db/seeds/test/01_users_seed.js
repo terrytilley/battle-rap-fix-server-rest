@@ -1,4 +1,7 @@
+const faker = require('faker');
 const bcrypt = require('bcryptjs');
+
+const resetPasswordToken = '94c6bc9837ad6bd972ac1d991a370e39754d45c25cdbf6b0db1b231ce1b3ba40230717e31d34b45047b26960f3ff14fc';
 
 exports.seed = knex => (
   knex('users').del()
@@ -19,8 +22,8 @@ exports.seed = knex => (
         username: 'reecef91',
         email: 'reece@reecefreed.com',
         password: bcrypt.hashSync('qwerty123'),
-        reset_password_token: null,
-        reset_password_expires: null,
+        reset_password_token: resetPasswordToken,
+        reset_password_expires: faker.date.future(),
         active: true,
       })
     ))

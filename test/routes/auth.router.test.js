@@ -133,4 +133,57 @@ describe('/auth', () => {
         });
     });
   });
+
+  describe('PATCH /forgot-password', () => {
+    xit('should allow user to request reset password email', () => {
+      request(app)
+        .patch(`${URL}/auth/forgot-password`)
+        .send({
+          email: 'terry@terrytilley.com',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.accepted[0]).to.have.property('status', 'sent');
+          expect(res.body.accepted[0]).to.have.property('email', 'terry@terrytilley.com');
+        });
+    });
+
+    it('should return error if email not found', () => {
+      request(app)
+        .patch(`${URL}/auth/forgot-password`)
+        .send({
+          email: 'terrence@terrytilley.com',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(404);
+          expect(res.body).to.have.property('error', 'terrence@terrytilley.com does not exist');
+        });
+    });
+  });
+
+  describe('PATCH /reset-password/:token', () => {
+    it('should successfully change password', () => {
+      request(app)
+        .patch(`${URL}/auth/reset-password/94c6bc9837ad6bd972ac1d991a370e39754d45c25cdbf6b0db1b231ce1b3ba40230717e31d34b45047b26960f3ff14fc`)
+        .send({
+          password: 'qwerty123456',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('message', 'Password successfully changed.');
+        });
+    });
+
+    it('should NOT change password if token has expired', () => {
+      request(app)
+        .patch(`${URL}/auth/reset-password/94c6bc9837ad6bd972ac1d991a370e39754d45c25cdbf6b0db1b231ce1b3ba40230717e31d34b45047b26960f3ff14fd`)
+        .send({
+          password: 'qwerty123456',
+        })
+        .then((res) => {
+          expect(res.statusCode).to.equal(404);
+          expect(res.body).to.have.property('error', 'Token has expired');
+        });
+    });
+  });
 });
