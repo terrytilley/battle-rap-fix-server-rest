@@ -150,8 +150,8 @@ describe('/auth', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.accepted[0]).to.have.property('status', 'sent');
-          expect(res.body.accepted[0]).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body).to.have.property('status', 'sent');
+          expect(res.body).to.have.property('email', 'terry@terrytilley.com');
           done();
         });
     });

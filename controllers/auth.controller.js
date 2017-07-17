@@ -78,7 +78,7 @@ export const forgotPassword = (req, res, next) => {
   req.sanitize('email').trim();
   req.checkBody('email', 'Invalid email address').notEmpty().isEmail();
 
-  const email = req.body.email;
+  const userEmail = req.body.email;
   const expireDate = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString();
 
   req.getValidationResult().then((result) => {
@@ -90,13 +90,13 @@ export const forgotPassword = (req, res, next) => {
 
       return User
         .query()
-        .where('email', email)
+        .where('email', userEmail)
         .patch({
           reset_password_token: resetToken,
           reset_password_expires: expireDate,
         })
         .then((data) => {
-          if (data !== 1) return res.status(404).json({ error: `${email} does not exist` });
+          if (data !== 1) return res.status(404).json({ error: `${userEmail} does not exist` });
 
           const buttonHtml = `<a href="http://localhost:8000/api/v1/auth/reset-password/${resetToken}" class="btn-primary" itemprop="url" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Reset your password</a>`;
 
@@ -111,11 +111,13 @@ export const forgotPassword = (req, res, next) => {
               ],
             },
             from: 'noreply@battlerapfix.com',
-            to: email,
+            to: userEmail,
             subject: 'Reset Password',
           }, (error, info) => {
             if (error) console.error(error);
-            return res.status(200).json(info);
+            const { email, status } = info.accepted[0];
+
+            return res.status(200).json({ email, status });
           });
         })
         .catch(error => res.status(500).json({ error }));
