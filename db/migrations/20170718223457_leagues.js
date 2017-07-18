@@ -1,6 +1,8 @@
 exports.up = knex => (
   knex.schema.createTable('leagues', (table) => {
     table.increments('id').notNullable().primary();
+    table.integer('user_id').unsigned();
+    table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE');
     table.string('name').notNullable().unique();
     table.string('name_slug').notNullable().unique();
     table.string('slogan').nullable();

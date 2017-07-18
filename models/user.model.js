@@ -1,4 +1,5 @@
 import { Model } from 'objection';
+import League from './league.model';
 
 class User extends Model {
   static get tableName() {
@@ -27,6 +28,19 @@ class User extends Model {
         password: { type: 'string', minLength: 8, maxLength: 100 },
         active: { type: 'boolean' },
         created_at: { type: 'string', format: 'date-time' },
+      },
+    };
+  }
+
+  static get relationMappings() {
+    return {
+      leagues: {
+        relation: Model.HasManyRelation,
+        modelClass: League,
+        join: {
+          from: 'users.id',
+          to: 'leagues.user_id',
+        },
       },
     };
   }
