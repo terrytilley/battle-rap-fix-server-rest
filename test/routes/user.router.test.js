@@ -29,6 +29,7 @@ describe('/users', () => {
           expect(res.body[0]).to.have.property('displayName', 'Terry Tilley');
           expect(res.body[0]).to.have.property('username', 'terryt88');
           expect(res.body[0]).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body[0]).to.have.property('active', true);
           expect(res.body[0]).to.not.have.property('password', 'qwerty123');
           done();
         });
@@ -45,6 +46,7 @@ describe('/users', () => {
           expect(res.body).to.have.property('displayName', 'Terry Tilley');
           expect(res.body).to.have.property('username', 'terryt88');
           expect(res.body).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body).to.have.property('active', true);
           expect(res.body).to.not.have.property('password', 'qwerty123');
           done();
         });
@@ -71,6 +73,7 @@ describe('/users', () => {
           expect(res.body).to.have.property('displayName', 'Terry Tilley');
           expect(res.body).to.have.property('username', 'terryt88');
           expect(res.body).to.have.property('email', 'terry@terrytilley.com');
+          expect(res.body).to.have.property('active', true);
           expect(res.body).to.not.have.property('password', 'qwerty123');
           done();
         });

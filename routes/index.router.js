@@ -1,6 +1,7 @@
 import express from 'express';
 import authRoutes from './auth.router';
 import userRoutes from './user.router';
+import leagueRoutes from './league.router';
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ router.get('/', (req, res) => {
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
+router.use('/leagues', leagueRoutes);
 
 export default router;

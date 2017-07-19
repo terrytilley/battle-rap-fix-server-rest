@@ -10,6 +10,7 @@ class League extends Model {
     return {
       type: 'object',
       required: [
+        'user_id',
         'name',
         'name_slug',
         'country',
@@ -19,6 +20,7 @@ class League extends Model {
 
       properties: {
         id: { type: 'integer' },
+        user_id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 100 },
         name_slug: { type: 'string', minLength: 1, maxLength: 100 },
         slogan: { type: 'string', minLength: 1, maxLength: 150 },
