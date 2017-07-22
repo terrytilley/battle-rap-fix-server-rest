@@ -14,9 +14,7 @@ const app = express();
 
 Model.knex(knex);
 
-if (process.env.NODE_ENV !== 'test') {
-  app.use(logger('dev'));
-}
+if (process.env.NODE_ENV !== 'test') app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(cors());

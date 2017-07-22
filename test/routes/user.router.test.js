@@ -62,6 +62,15 @@ describe('/users', () => {
           done();
         });
     });
+
+    it('should return error if ID is NOT valid', (done) => {
+      request(app)
+        .get(`${URL}/id/abc`)
+        .end((err, res) => {
+          expect(res.status).to.equal(500);
+          done();
+        });
+    });
   });
 
   describe('GET /:username', () => {
