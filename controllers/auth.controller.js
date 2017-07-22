@@ -12,7 +12,7 @@ const transport = nodemailer.createTransport(mandrillTransport({
   },
 }));
 
-export const register = (req, res) => {
+export const register = (req, res, next) => {
   req.sanitize('username').trim();
   req.sanitize('email').trim();
   req.sanitize('password').trim();
@@ -52,7 +52,7 @@ export const register = (req, res) => {
           user: userInfo,
         });
       })
-      .catch(error => res.status(500).json({ error }));
+      .catch(error => next(error));
   });
 };
 

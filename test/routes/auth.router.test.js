@@ -51,7 +51,7 @@ describe('/auth', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(500);
-          expect(res.body).to.have.property('error');
+          expect(res.body).to.be.an('object');
           done();
         });
     });
@@ -67,7 +67,7 @@ describe('/auth', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(500);
-          expect(res.body).to.have.property('error');
+          expect(res.body).to.be.an('object');
           done();
         });
     });

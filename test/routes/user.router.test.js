@@ -57,7 +57,8 @@ describe('/users', () => {
         .get(`${URL}/id/9999`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.have.property('error', 'User Not Found');
+          expect(res.body).to.have.property('message', 'User Not Found');
+          expect(res.body).to.have.property('error');
           done();
         });
     });
@@ -84,7 +85,8 @@ describe('/users', () => {
         .get(`${URL}/idontexist`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.have.property('error', 'User Not Found');
+          expect(res.body).to.have.property('message', 'User Not Found');
+          expect(res.body).to.have.property('error');
           done();
         });
     });

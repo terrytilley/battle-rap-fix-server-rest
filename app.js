@@ -30,25 +30,16 @@ app.use((req, res, next) => {
   next(err);
 });
 
-// Development Error Handler
+// Error Handler
 if (app.get('env') === 'development') {
   app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({
       message: err.message,
-      error: err,
+      error: req.app.get('env') === 'development' ? err : {},
     });
     next(err);
   });
 }
-
-// Production Error Handler
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: {},
-  });
-});
 
 export default app;

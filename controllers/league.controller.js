@@ -1,6 +1,6 @@
 import League from '../models/league.model';
 
-export const getAll = (req, res) => {
+export const getAll = (req, res, next) => {
   League
   .query()
   .orderBy('id')
@@ -15,5 +15,5 @@ export const getAll = (req, res) => {
         country,
         active,
       }
-    ))))).catch(error => res.status(500).json({ error }));
+    ))))).catch(error => next(error));
 };

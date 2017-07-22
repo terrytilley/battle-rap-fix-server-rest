@@ -1,6 +1,6 @@
 import User from '../models/user.model';
 
-export const getAll = (req, res) => {
+export const getAll = (req, res, next) => {
   User
     .query()
     .orderBy('id')
@@ -13,16 +13,16 @@ export const getAll = (req, res) => {
           displayName: display_name,
           active,
         }
-      ))))).catch(error => res.status(500).json({ error }));
+      ))))).catch(error => next(error));
 };
 
-export const getById = (req, res) => {
+export const getById = (req, res, next) => {
   User
     .query()
     .where('id', req.params.id)
     .first()
     .then((user) => {
-      if (!user) return res.status(404).json({ error: 'User Not Found' });
+      if (!user) return res.status(404).json({ message: 'User Not Found', error: {} });
       const { id, display_name, username, email, active } = user;
 
       return res.status(200).json({
@@ -33,16 +33,16 @@ export const getById = (req, res) => {
         active,
       });
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => next(error));
 };
 
-export const getByUsername = (req, res) => {
+export const getByUsername = (req, res, next) => {
   User
     .query()
     .where('username', req.params.username)
     .first()
     .then((user) => {
-      if (!user) return res.status(404).json({ error: 'User Not Found' });
+      if (!user) return res.status(404).json({ message: 'User Not Found', error: {} });
       const { id, display_name, username, email, active } = user;
 
       return res.status(200).json({
@@ -53,5 +53,5 @@ export const getByUsername = (req, res) => {
         active,
       });
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => next(error));
 };
