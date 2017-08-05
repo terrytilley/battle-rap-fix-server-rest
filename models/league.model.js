@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import User from './user.model';
+import Event from './event.model';
 
 class League extends Model {
   static get tableName() {
@@ -39,6 +40,14 @@ class League extends Model {
         join: {
           from: 'leagues.user_id',
           to: 'users.id',
+        },
+      },
+      events: {
+        relation: Model.HasManyRelation,
+        modelClass: Event,
+        join: {
+          from: 'leagues.id',
+          to: 'events.league_id',
         },
       },
     };
