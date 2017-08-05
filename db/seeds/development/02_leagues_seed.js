@@ -20,4 +20,13 @@ exports.seed = knex => (
         active: true,
       })
     ))
+    .then(() => (
+      knex('leagues').insert({
+        user_id: 3,
+        name: 'King of The Ronalds',
+        name_slug: 'king-of-the-ronalds',
+        country: 'United Kingdom',
+        active: true,
+      })
+    ))
 );
