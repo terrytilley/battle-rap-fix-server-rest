@@ -1,8 +1,10 @@
 import express from 'express';
-import { getAll } from '../controllers/league.controller';
+import { isValidId } from '../lib/validate';
+import { getAll, getById } from '../controllers/league.controller';
 
 const router = express.Router();
 
 router.get('/', getAll);
+router.get('/id/:id', isValidId, getById);
 
 export default router;

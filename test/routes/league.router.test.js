@@ -35,4 +35,22 @@ describe('/leagues', () => {
         });
     });
   });
+
+  describe('GET /id/:id', () => {
+    it('should get a league by id', (done) => {
+      request(app)
+        .get(`${URL}/id/1`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('id', 1);
+          expect(res.body).to.have.property('userId', 1);
+          expect(res.body).to.have.property('name', 'Don\'t Flop Entertainment');
+          expect(res.body).to.have.property('nameSlug', 'dont-flop-entertainment');
+          expect(res.body).to.have.property('slogan', 'DFAFD');
+          expect(res.body).to.have.property('country', 'United Kingdom');
+          expect(res.body).to.have.property('active', true);
+          done();
+        });
+    });
+  });
 });
