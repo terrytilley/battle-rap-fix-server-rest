@@ -37,7 +37,7 @@ describe('/leagues', () => {
   });
 
   describe('GET /id/:id', () => {
-    it('should get a league by id', (done) => {
+    it('should get a league by ID', (done) => {
       request(app)
         .get(`${URL}/id/1`)
         .end((err, res) => {
@@ -49,6 +49,26 @@ describe('/leagues', () => {
           expect(res.body).to.have.property('slogan', 'DFAFD');
           expect(res.body).to.have.property('country', 'United Kingdom');
           expect(res.body).to.have.property('active', true);
+          done();
+        });
+    });
+
+    it('should return error if league not found', (done) => {
+      request(app)
+        .get(`${URL}/id/9999`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('message', 'League Not Found');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+
+    it('should return error if ID is NOT valid', (done) => {
+      request(app)
+        .get(`${URL}/id/abc`)
+        .end((err, res) => {
+          expect(res.status).to.equal(500);
           done();
         });
     });
