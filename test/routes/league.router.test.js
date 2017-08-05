@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { expect } from 'chai';
+import { generateToken } from '../../lib/auth';
 import { rollback, migrate, seed } from '../helper';
 import app from '../../app';
 
@@ -15,6 +16,50 @@ describe('/leagues', () => {
 
   afterEach((done) => {
     rollback().then(() => done());
+  });
+
+  const token = generateToken({ id: 3 });
+
+  describe('POST /', () => {
+    it('should create a new league', (done) => {
+      request(app)
+        .post(`${URL}`)
+        .set('authorization', token)
+        .send({
+          userId: 3,
+          name: 'Battle Rap Fix League',
+          slogan: 'This Is Battle Rap Bitch!',
+          country: 'United Kingdom',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('id');
+          expect(res.body).to.have.property('userId', 3);
+          expect(res.body).to.have.property('name', 'Battle Rap Fix League');
+          expect(res.body).to.have.property('nameSlug', 'battle-rap-fix-league');
+          expect(res.body).to.have.property('slogan', 'This Is Battle Rap Bitch!');
+          expect(res.body).to.have.property('country', 'United Kingdom');
+          expect(res.body).to.have.property('active', true);
+          done();
+        });
+    });
+
+    it('should NOT create a new league if name is taken', (done) => {
+      request(app)
+        .post(`${URL}`)
+        .set('authorization', token)
+        .send({
+          userId: 3,
+          name: 'Don\'t Flop Entertainment', // Taken name
+          slogan: 'DFAFD',
+          country: 'United Kingdom',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(500);
+          expect(res.body).to.be.an('object');
+          done();
+        });
+    });
   });
 
   describe('GET /', () => {
