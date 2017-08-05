@@ -73,4 +73,33 @@ describe('/leagues', () => {
         });
     });
   });
+
+  describe('GET /:slug', () => {
+    it('should get a league by slug', (done) => {
+      request(app)
+        .get(`${URL}/dont-flop-entertainment`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('id', 1);
+          expect(res.body).to.have.property('userId', 1);
+          expect(res.body).to.have.property('name', 'Don\'t Flop Entertainment');
+          expect(res.body).to.have.property('nameSlug', 'dont-flop-entertainment');
+          expect(res.body).to.have.property('slogan', 'DFAFD');
+          expect(res.body).to.have.property('country', 'United Kingdom');
+          expect(res.body).to.have.property('active', true);
+          done();
+        });
+    });
+
+    it('should return error if user not found', (done) => {
+      request(app)
+        .get(`${URL}/idontexist`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('message', 'League Not Found');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
 });

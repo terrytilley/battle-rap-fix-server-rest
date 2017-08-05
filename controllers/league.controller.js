@@ -39,3 +39,25 @@ export const getById = (req, res, next) => {
     })
     .catch(error => next(error));
 };
+
+export const getBySlug = (req, res, next) => {
+  League
+    .query()
+    .where('name_slug', req.params.slug)
+    .first()
+    .then((league) => {
+      if (!league) return res.status(404).json({ message: 'League Not Found', error: {} });
+      const { id, user_id, name, name_slug, slogan, country, active } = league;
+
+      return res.status(200).json({
+        id,
+        userId: user_id,
+        name,
+        nameSlug: name_slug,
+        slogan,
+        country,
+        active,
+      });
+    })
+    .catch(error => next(error));
+};
