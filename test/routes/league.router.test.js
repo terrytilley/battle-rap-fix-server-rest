@@ -36,7 +36,7 @@ describe('/leagues', () => {
           expect(res.body).to.have.property('id');
           expect(res.body).to.have.property('userId', 3);
           expect(res.body).to.have.property('name', 'Battle Rap Fix League');
-          expect(res.body).to.have.property('nameSlug', 'battle-rap-fix-league');
+          expect(res.body).to.have.property('slug', 'battle-rap-fix-league');
           expect(res.body).to.have.property('slogan', 'This Is Battle Rap Bitch!');
           expect(res.body).to.have.property('country', 'United Kingdom');
           expect(res.body).to.have.property('active', true);
@@ -72,7 +72,7 @@ describe('/leagues', () => {
           expect(res.body[0]).to.have.property('id', 1);
           expect(res.body[0]).to.have.property('userId', 1);
           expect(res.body[0]).to.have.property('name', 'Don\'t Flop Entertainment');
-          expect(res.body[0]).to.have.property('nameSlug', 'dont-flop-entertainment');
+          expect(res.body[0]).to.have.property('slug', 'dont-flop-entertainment');
           expect(res.body[0]).to.have.property('slogan', 'DFAFD');
           expect(res.body[0]).to.have.property('country', 'United Kingdom');
           expect(res.body[0]).to.have.property('active', true);
@@ -90,7 +90,7 @@ describe('/leagues', () => {
           expect(res.body).to.have.property('id', 1);
           expect(res.body).to.have.property('userId', 1);
           expect(res.body).to.have.property('name', 'Don\'t Flop Entertainment');
-          expect(res.body).to.have.property('nameSlug', 'dont-flop-entertainment');
+          expect(res.body).to.have.property('slug', 'dont-flop-entertainment');
           expect(res.body).to.have.property('slogan', 'DFAFD');
           expect(res.body).to.have.property('country', 'United Kingdom');
           expect(res.body).to.have.property('active', true);
@@ -128,7 +128,7 @@ describe('/leagues', () => {
           expect(res.body).to.have.property('id', 1);
           expect(res.body).to.have.property('userId', 1);
           expect(res.body).to.have.property('name', 'Don\'t Flop Entertainment');
-          expect(res.body).to.have.property('nameSlug', 'dont-flop-entertainment');
+          expect(res.body).to.have.property('slug', 'dont-flop-entertainment');
           expect(res.body).to.have.property('slogan', 'DFAFD');
           expect(res.body).to.have.property('country', 'United Kingdom');
           expect(res.body).to.have.property('active', true);

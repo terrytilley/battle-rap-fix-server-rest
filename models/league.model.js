@@ -13,7 +13,7 @@ class League extends Model {
       required: [
         'user_id',
         'name',
-        'name_slug',
+        'slug',
         'country',
         'created_at',
         'active',
@@ -23,7 +23,7 @@ class League extends Model {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 100 },
-        name_slug: { type: 'string', minLength: 1, maxLength: 100 },
+        slug: { type: 'string', minLength: 1, maxLength: 100 },
         slogan: { type: 'string', minLength: 1, maxLength: 150 },
         country: { type: 'string', minLength: 1, maxLength: 50 },
         created_at: { type: 'string', format: 'date-time' },

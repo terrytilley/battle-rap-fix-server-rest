@@ -3,7 +3,7 @@ import League from '../models/league.model';
 export const getLeagueEvents = (req, res, next) => {
   League
     .query()
-    .where('name_slug', req.params.league_slug)
+    .where('slug', req.params.league_slug)
     .first()
     .eager('events')
     .then(({ events }) => {
@@ -27,7 +27,7 @@ export const getLeagueEvents = (req, res, next) => {
 export const getLeagueEvent = (req, res, next) => {
   League
     .query()
-    .where('name_slug', req.params.league_slug)
+    .where('slug', req.params.league_slug)
     .first()
     .eager('events')
     .modifyEager('events', (builder) => {

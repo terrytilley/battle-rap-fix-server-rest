@@ -4,7 +4,7 @@ exports.up = knex => (
     table.integer('user_id').unsigned();
     table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE');
     table.string('name').notNullable().unique();
-    table.string('name_slug').notNullable().unique();
+    table.string('slug').notNullable().unique();
     table.string('slogan').nullable();
     table.string('country').notNullable();
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());

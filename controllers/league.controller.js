@@ -20,7 +20,7 @@ export const createLeague = (req, res, next) => {
   const newLeague = {
     user_id: userId,
     name: leagueName,
-    name_slug: nameSlug,
+    slug: nameSlug,
     slogan: leagueSlogan,
     country: leagueCountry,
     created_at: createdAt,
@@ -34,13 +34,13 @@ export const createLeague = (req, res, next) => {
       .query()
       .insert(newLeague)
       .then((league) => {
-        const { id, user_id, name, name_slug, slogan, country, active } = league;
+        const { id, user_id, name, slug, slogan, country, active } = league;
 
         res.status(201).json({
           id,
           userId: user_id,
           name,
-          nameSlug: name_slug,
+          slug,
           slogan,
           country,
           active,
@@ -55,12 +55,12 @@ export const getAll = (req, res, next) => {
     .query()
     .orderBy('id')
     .then(data => (
-      res.status(200).json(data.map(({ id, user_id, name, name_slug, slogan, country, active }) => (
+      res.status(200).json(data.map(({ id, user_id, name, slug, slogan, country, active }) => (
         {
           id,
           userId: user_id,
           name,
-          nameSlug: name_slug,
+          slug,
           slogan,
           country,
           active,
@@ -75,13 +75,13 @@ export const getById = (req, res, next) => {
     .first()
     .then((league) => {
       if (!league) return res.status(404).json({ message: 'League Not Found', error: {} });
-      const { id, user_id, name, name_slug, slogan, country, active } = league;
+      const { id, user_id, name, slug, slogan, country, active } = league;
 
       return res.status(200).json({
         id,
         userId: user_id,
         name,
-        nameSlug: name_slug,
+        slug,
         slogan,
         country,
         active,
@@ -93,17 +93,17 @@ export const getById = (req, res, next) => {
 export const getBySlug = (req, res, next) => {
   League
     .query()
-    .where('name_slug', req.params.slug)
+    .where('slug', req.params.slug)
     .first()
     .then((league) => {
       if (!league) return res.status(404).json({ message: 'League Not Found', error: {} });
-      const { id, user_id, name, name_slug, slogan, country, active } = league;
+      const { id, user_id, name, slug, slogan, country, active } = league;
 
       return res.status(200).json({
         id,
         userId: user_id,
         name,
-        nameSlug: name_slug,
+        slug,
         slogan,
         country,
         active,
