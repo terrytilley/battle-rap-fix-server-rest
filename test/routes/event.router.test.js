@@ -23,7 +23,7 @@ describe('/events', () => {
           expect(res.body[0]).to.have.property('id', 1);
           expect(res.body[0]).to.have.property('leagueId', 1);
           expect(res.body[0]).to.have.property('name', 'REVIVAL 9INE');
-          expect(res.body[0]).to.have.property('nameSlug', 'revival-9ine');
+          expect(res.body[0]).to.have.property('slug', 'revival-9ine');
           expect(res.body[0]).to.have.property('venue', 'Venue Nightclub');
           expect(res.body[0]).to.have.property('location', '29 Jackson Row Venue Nightclub Manchester');
           expect(res.body[0]).to.have.property('date');
@@ -54,7 +54,7 @@ describe('/events', () => {
           expect(res.body).to.have.property('id', 1);
           expect(res.body).to.have.property('leagueId', 1);
           expect(res.body).to.have.property('name', 'REVIVAL 9INE');
-          expect(res.body).to.have.property('nameSlug', 'revival-9ine');
+          expect(res.body).to.have.property('slug', 'revival-9ine');
           expect(res.body).to.have.property('venue', 'Venue Nightclub');
           expect(res.body).to.have.property('location', '29 Jackson Row Venue Nightclub Manchester');
           expect(res.body).to.have.property('date');

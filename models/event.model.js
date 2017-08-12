@@ -12,7 +12,7 @@ class Event extends Model {
       required: [
         'league_id',
         'name',
-        'name_slug',
+        'slug',
         'venue',
         'location',
         'date',
@@ -23,7 +23,7 @@ class Event extends Model {
         id: { type: 'integer' },
         league_id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 100 },
-        name_slug: { type: 'string', minLength: 1, maxLength: 100 },
+        slug: { type: 'string', minLength: 1, maxLength: 100 },
         venue: { type: 'string', minLength: 1, maxLength: 200 },
         location: { type: 'string', minLength: 1, maxLength: 200 },
         date: { type: 'string', format: 'date-time' },

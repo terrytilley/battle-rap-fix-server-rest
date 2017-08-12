@@ -10,11 +10,11 @@ export const getLeagueEvents = (req, res, next) => {
       if (events.length <= 0) return res.status(404).json({ message: 'No Events Found', error: {} });
 
       return res.status(200).json(events.map(
-        ({ id, league_id, name, name_slug, venue, location, date }) => ({
+        ({ id, league_id, name, slug, venue, location, date }) => ({
           id,
           leagueId: league_id,
           name,
-          nameSlug: name_slug,
+          slug,
           venue,
           location,
           date,
@@ -31,17 +31,17 @@ export const getLeagueEvent = (req, res, next) => {
     .first()
     .eager('events')
     .modifyEager('events', (builder) => {
-      builder.where('name_slug', req.params.event_slug);
+      builder.where('slug', req.params.event_slug);
     })
     .then(({ events }) => {
       if (events.length <= 0) return res.status(404).json({ message: 'No Event Found', error: {} });
-      const { id, league_id, name, name_slug, venue, location, date } = events[0];
+      const { id, league_id, name, slug, venue, location, date } = events[0];
 
       return res.status(200).json({
         id,
         leagueId: league_id,
         name,
-        nameSlug: name_slug,
+        slug,
         venue,
         location,
         date,
