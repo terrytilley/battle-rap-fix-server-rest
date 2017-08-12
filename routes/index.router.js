@@ -3,6 +3,7 @@ import authRoutes from './auth.router';
 import userRoutes from './user.router';
 import leagueRoutes from './league.router';
 import eventRoutes from './event.router';
+import artistRoutes from './artist.router';
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/leagues', leagueRoutes);
 router.use('/leagues', eventRoutes);
+router.use('/artists', artistRoutes);
 
 export default router;
